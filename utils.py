@@ -20,6 +20,13 @@ class Neopeptide:
         self.varcode_dir = args.varcode_dir
 
     def oligo_encoding(self):
+        '''This method is adapted from Erin Kelly <ekelley@tgen.org>
+
+        source:
+        https://github.com/TGenNorth/TM2_PepSeq/blob/master/analysis/bash/library_design/run_pepseq_design_step1.sh
+
+        :return: None
+        '''
         self.named_peptides = os.path.join(self.working_dir, '{}.named_peptides.csv'.format(self.library_id))
         self.encoded_seqs = os.path.join(self.working_dir, '{}.encoded_seqs.csv'.format(self.library_id))
         self.encoded_ratio = os.path.join(self.working_dir, '{}.encoded_ratio.csv'.format(self.library_id))
@@ -35,6 +42,13 @@ class Neopeptide:
             proc.call(cmd_encoding, shell=True)
 
     def oligo_scoring(self):
+        '''This method is adapted from Erin Kelly <ekelley@tgen.org>
+
+        source:
+        https://github.com/TGenNorth/TM2_PepSeq/blob/master/analysis/bash/library_design/run_pepseq_design_step2.sh
+
+        :return: None
+        '''
         self.best_encodings = '{}.best_encodings.csv'.format(self.library_id)
         self.encoding_orderfile = '{}.best_encodings.orderfile.csv'.format(self.library_id)
 

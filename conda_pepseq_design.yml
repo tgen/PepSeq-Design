@@ -1,4 +1,7 @@
 name: pepseq_design
+Comment: >
+    This yaml file is adapted from Erin Kelly <ekelley@tgen.org>
+    source: https://github.com/tgen/PepSeq-Design/blob/main/conda_pepseq_design.yml
 channels:
   - defaults
   - conda-forge

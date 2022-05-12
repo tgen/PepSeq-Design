@@ -26,6 +26,12 @@ The installer prompts “Do you wish the installer to initialize Anaconda3 by ru
 conda env create -f conda_pepseq_design.yml
 ```
 
+#### Step 3: install required reference genome data through PyEnsembl as follows:
+
+```
+pyensembl install --release 75 76
+```
+
 ## Activate the python environment before start running the PepSeq pipeline
 
 ```
