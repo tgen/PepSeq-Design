@@ -191,6 +191,16 @@ class Neopeptide:
         return peptide_path_merged
 
     def _make_prot_seq(self, sample_id, vcf, vcf_source, genome=None):
+        '''This method is adapted from Kevin Drenner <kdrenner@tgen.org>
+
+        source: ${HOME}/NeoNox2/makeProtSeq.py
+
+        :param sample_id:   sample id
+        :param vcf:         snpeff annotated vcf file path
+        :param vcf_source:  pipeline name
+        :param genome:      GRCh37 or hg38
+        :return:            peptide file path
+        '''
         source_name = '{}_{}'.format(sample_id, vcf_source)
         peptide_file = '{}_{}.varCode.csv'.format(self.library_id, source_name)
         peptide_path = os.path.join(self.varcode_dir, peptide_file)
@@ -209,13 +219,11 @@ class Neopeptide:
 
         effectDF = pd.DataFrame(index=range(0, len(effectList)),
                                 columns=["variantId", "effectId", "gene_name", "effectClass", "topEffect", "mutPept1",
-                                         "mutPept2", "mutPept3",
-                                         "mutPept4", "mutPept5", "mutPept6", "mutPept7", "mutPept8", "mutPept9",
-                                         "mutPept10", "mutPept11", "mutPept12",
-                                         "mutPept13", "mutPept14", "mutPept15", "wtPept1", "wtPept2", "wtPept3",
-                                         "wtPept4", "wtPept5", "wtPept6", "wtPept7",
-                                         "wtPept8", "wtPept9", "wtPept10", "wtPept11", "wtPept12", "wtPept13",
-                                         "wtPept14", "wtPept15"])
+                                         "mutPept2", "mutPept3", "mutPept4", "mutPept5", "mutPept6", "mutPept7",
+                                         "mutPept8", "mutPept9", "mutPept10", "mutPept11", "mutPept12", "mutPept13",
+                                         "mutPept14", "mutPept15", "wtPept1", "wtPept2", "wtPept3", "wtPept4",
+                                         "wtPept5", "wtPept6", "wtPept7", "wtPept8", "wtPept9", "wtPept10",
+                                         "wtPept11", "wtPept12", "wtPept13", "wtPept14", "wtPept15"])
         for i in range(0, len(effectList)):
             myEffect = effectList[i]
             effectDF.loc[i, "variantId"] = myEffect.variant.short_description
@@ -235,28 +243,23 @@ class Neopeptide:
                         if re.search('\*', myEffect.short_description):
                             effectDF.loc[i, mutPept + str(j)] = ""
                             effectDF.loc[i, wtPept + str(j)] = ""
-                        elif (myEffect.aa_mutation_start_offset + peptideLength) > len(
-                                myEffect.mutant_protein_sequence):
+                        elif (myEffect.aa_mutation_start_offset + peptideLength) > len(myEffect.mutant_protein_sequence):
                             if j == 1:
                                 endLength = len(myEffect.mutant_protein_sequence) - myEffect.aa_mutation_start_offset
                                 difference = peptideLength - endLength
                                 effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                    myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (
-                                                                        endLength)]
+                                    myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (endLength)]
                                 effectDF.loc[i, wtPept + str(j)] = myEffect.original_protein_sequence[
-                                                                   myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (
-                                                                       endLength)]
+                                    myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (endLength)]
                                 if endLength != 0:
                                     endLength = endLength - 1
                                 difference = difference + 1
                             else:
                                 if endLength != 0:
                                     effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                        myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (
-                                                                            endLength)]
+                                        myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (endLength)]
                                     effectDF.loc[i, wtPept + str(j)] = myEffect.original_protein_sequence[
-                                                                       myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (
-                                                                           endLength)]
+                                        myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (endLength)]
                                     difference = difference + 1
                                     endLength = endLength - 1
                                 else:
@@ -264,47 +267,35 @@ class Neopeptide:
                                     effectDF.loc[i, wtPept + str(j)] = ""
                         elif j == 1:
                             effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                myEffect.aa_mutation_start_offset:myEffect.aa_mutation_start_offset + (
-                                                                    peptideLength)]
+                                myEffect.aa_mutation_start_offset:myEffect.aa_mutation_start_offset + (peptideLength)]
                             effectDF.loc[i, wtPept + str(j)] = myEffect.original_protein_sequence[
-                                                               myEffect.aa_mutation_start_offset - (
-                                                                           j - 1):myEffect.aa_mutation_start_offset + (
-                                                                   peptideLength)]
+                                myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (peptideLength)]
                         else:
                             effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                myEffect.aa_mutation_start_offset - (
-                                                                            j - 1):myEffect.aa_mutation_start_offset + (
-                                                                            peptideLength - (j - 1))]
+                                myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (peptideLength - (j - 1))]
                             effectDF.loc[i, wtPept + str(j)] = myEffect.original_protein_sequence[
-                                                               myEffect.aa_mutation_start_offset - (
-                                                                           j - 1):myEffect.aa_mutation_start_offset + (
-                                                                           peptideLength - (j - 1))]
+                                myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (peptideLength - (j - 1))]
                     if re.search('ins', myEffect.variant.short_description):
                         if re.search('\*', myEffect.short_description):
                             effectDF.loc[i, mutPept + str(j)] = ""
                             effectDF.loc[i, wtPept + str(j)] = ""
-                        elif (myEffect.aa_mutation_start_offset + peptideLength) > len(
-                                myEffect.mutant_protein_sequence):
+                        elif (myEffect.aa_mutation_start_offset + peptideLength) > len(myEffect.mutant_protein_sequence):
                             if j == 1:
                                 endLength = len(myEffect.mutant_protein_sequence) - myEffect.aa_mutation_start_offset
                                 difference = peptideLength - endLength
                                 effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                    myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (
-                                                                        endLength)]
+                                    myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (endLength)]
                                 effectDF.loc[i, wtPept + str(j)] = myEffect.original_protein_sequence[
-                                                                   myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (
-                                                                       endLength)]
+                                    myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (endLength)]
                                 if endLength != 0:
                                     endLength = endLength - 1
                                 difference = difference + 1
                             else:
                                 if endLength != 0:
                                     effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                        myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (
-                                                                            endLength)]
+                                        myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (endLength)]
                                     effectDF.loc[i, wtPept + str(j)] = myEffect.original_protein_sequence[
-                                                                       myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (
-                                                                           endLength)]
+                                        myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (endLength)]
                                     difference = difference + 1
                                     endLength = endLength - 1
                                 else:
@@ -312,46 +303,33 @@ class Neopeptide:
                                     effectDF.loc[i, wtPept + str(j)] = ""
                         elif j == 1:
                             effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                myEffect.aa_mutation_start_offset:myEffect.aa_mutation_start_offset + (
-                                                                    peptideLength)]
+                                myEffect.aa_mutation_start_offset:myEffect.aa_mutation_start_offset + (peptideLength)]
                             effectDF.loc[i, wtPept + str(j)] = myEffect.original_protein_sequence[
-                                                               myEffect.aa_mutation_start_offset - (
-                                                                           j - 1):myEffect.aa_mutation_start_offset + (
-                                                                   peptideLength)]
+                                myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (peptideLength)]
                         else:
                             effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                myEffect.aa_mutation_start_offset - (
-                                                                            j - 1):myEffect.aa_mutation_start_offset + (
-                                                                            peptideLength - (j - 1))]
+                                myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (peptideLength - (j - 1))]
                             effectDF.loc[i, wtPept + str(j)] = myEffect.original_protein_sequence[
-                                                               myEffect.aa_mutation_start_offset - (
-                                                                           j - 1):myEffect.aa_mutation_start_offset + (
-                                                                           peptideLength - (j - 1))]
+                                myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (peptideLength - (j - 1))]
                     if re.search('>', myEffect.variant.short_description):
                         if re.search('stop-loss', myEffect.short_description):
                             print("HERE YO!!!! WHY YOU NOT PRINTING")
                             print(myEffect.short_description)
                             if j == 1:
                                 print(myEffect.mutant_protein_sequence[
-                                      myEffect.aa_mutation_start_offset:myEffect.aa_mutation_start_offset + (
-                                          peptideLength)])
+                                      myEffect.aa_mutation_start_offset:myEffect.aa_mutation_start_offset + (peptideLength)])
                                 print(mutPept + str(j))
                                 effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                    myEffect.aa_mutation_start_offset:myEffect.aa_mutation_start_offset + (
-                                                                        peptideLength)]
+                                    myEffect.aa_mutation_start_offset:myEffect.aa_mutation_start_offset + (peptideLength)]
                                 effectDF.loc[i, wtPept + str(j)] = ""
                             else:
                                 print(myEffect.mutant_protein_sequence[
-                                      myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (
-                                                  peptideLength - (j - 1))])
+                                      myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (peptideLength - (j - 1))])
                                 print(mutPept + str(j))
                                 print(myEffect.original_protein_sequence[
-                                      myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (
-                                                  peptideLength - (j - 1))])
+                                      myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (peptideLength - (j - 1))])
                                 effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                    myEffect.aa_mutation_start_offset - (
-                                                                                j - 1):myEffect.aa_mutation_start_offset + (
-                                                                                peptideLength - (j - 1))]
+                                    myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (peptideLength - (j - 1))]
                                 effectDF.loc[i, wtPept + str(j)] = ""
                         elif re.search('\*', myEffect.short_description):
                             effectDF.loc[i, mutPept + str(j)] = ""
@@ -362,22 +340,18 @@ class Neopeptide:
                                 endLength = len(myEffect.mutant_protein_sequence) - myEffect.aa_mutation_start_offset
                                 difference = peptideLength - endLength
                                 effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                    myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (
-                                                                        endLength)]
+                                    myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (endLength)]
                                 effectDF.loc[i, wtPept + str(j)] = myEffect.original_protein_sequence[
-                                                                   myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (
-                                                                       endLength)]
+                                    myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (endLength)]
                                 if endLength != 0:
                                     endLength = endLength - 1
                                 difference = difference + 1
                             else:
                                 if endLength != 0:
                                     effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                        myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (
-                                                                            endLength)]
+                                        myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (endLength)]
                                     effectDF.loc[i, wtPept + str(j)] = myEffect.original_protein_sequence[
-                                                                       myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (
-                                                                           endLength)]
+                                        myEffect.aa_mutation_start_offset - difference:myEffect.aa_mutation_start_offset + (endLength)]
                                     difference = difference + 1
                                     endLength = endLength - 1
                                 else:
@@ -389,13 +363,9 @@ class Neopeptide:
                                 difference = peptideLength - startLength
                             if startLength >= 0:
                                 effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                    myEffect.aa_mutation_start_offset - (
-                                                                                j - 1):myEffect.aa_mutation_start_offset + (
-                                                                                peptideLength - (j - 1))]
+                                    myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (peptideLength - (j - 1))]
                                 effectDF.loc[i, wtPept + str(j)] = myEffect.original_protein_sequence[
-                                                                   myEffect.aa_mutation_start_offset - (
-                                                                               j - 1):myEffect.aa_mutation_start_offset + (
-                                                                               peptideLength - (j - 1))]
+                                    myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (peptideLength - (j - 1))]
                                 difference = difference - 1
                                 startLength = startLength - 1
                             else:
@@ -404,21 +374,14 @@ class Neopeptide:
 
                         elif j == 1:
                             effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                myEffect.aa_mutation_start_offset:myEffect.aa_mutation_start_offset + (
-                                                                    peptideLength)]
+                                myEffect.aa_mutation_start_offset:myEffect.aa_mutation_start_offset + (peptideLength)]
                             effectDF.loc[i, wtPept + str(j)] = myEffect.original_protein_sequence[
-                                                               myEffect.aa_mutation_start_offset - (
-                                                                           j - 1):myEffect.aa_mutation_start_offset + (
-                                                                   peptideLength)]
+                                myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (peptideLength)]
                         else:
                             effectDF.loc[i, mutPept + str(j)] = myEffect.mutant_protein_sequence[
-                                                                myEffect.aa_mutation_start_offset - (
-                                                                            j - 1):myEffect.aa_mutation_start_offset + (
-                                                                            peptideLength - (j - 1))]
+                                myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (peptideLength - (j - 1))]
                             effectDF.loc[i, wtPept + str(j)] = myEffect.original_protein_sequence[
-                                                               myEffect.aa_mutation_start_offset - (
-                                                                           j - 1):myEffect.aa_mutation_start_offset + (
-                                                                           peptideLength - (j - 1))]
+                                myEffect.aa_mutation_start_offset - (j - 1):myEffect.aa_mutation_start_offset + (peptideLength - (j - 1))]
         print(myEffect.short_description)
         peptDF = pd.DataFrame(effectDF.groupby(
             ["variantId", "mutPept1", "mutPept2", "mutPept3", "mutPept4", "mutPept5", "mutPept6", "mutPept7", "mutPept8", "mutPept9",

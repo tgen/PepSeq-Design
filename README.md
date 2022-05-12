@@ -8,7 +8,7 @@ The PepSeq pipeline is a python package that uses python 3.7 and other packages.
 
 The package provides a yaml file to create the conda/python3.7 environment for the pipeline.
 
-#### Step 1: install Miniconda3 from [Miniconda3-py38_4.11.0-Linux-x86_64.sh] (https://repo.anaconda.com/miniconda/Miniconda3-py38_4.11.0-Linux-x86_64.sh)
+#### Step 1: install Miniconda3
  
 ```
 wget https://repo.anaconda.com/miniconda/Miniconda3-py38_4.11.0-Linux-x86_64.sh
