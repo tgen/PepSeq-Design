@@ -69,10 +69,10 @@ python  ~/compute/github/PepSeq-Design/pepseq_pipeline.py -i somatic_mutation_fi
 
 ## Input file format
 
+```
 Note: 1. vcf_path is the full file path or absolute path
       2. if either vcf file from Ashion or Phoenix pipeline is not available, put a dash '-' in the field
-
-```
+      
 sampleID_1,Ashion_vcf1_path,Phoenix_vcf1_path
 sampleID_2,Ashion_vcf2_path,-
 sampleID_3,-,Phoenix_vcf3_path
