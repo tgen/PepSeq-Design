@@ -54,7 +54,13 @@ Program options:
         --encode_dir:     directory that contains executable and accessory files for oligo encoding
 ```
 
-## input file format
+Run the pipeline on HPC worker node: an example below
+
+```
+python  ~/compute/github/PepSeq-Design/pepseq_pipeline.py -i somatic_mutation_files.txt -l TM1
+```
+
+## Input file format
 
 ```
 sampleID_1,Ashion_vcf_1,Phoenix_vcf_1
@@ -63,7 +69,7 @@ sampleID_2,Ashion_vcf_2,Phoenix_vcf_2
 sampleID_n,Ashion_vcf_n,Phoenix_vcf_n
 ```
 
-## output results
+## Output results
 
 ```
 Library ordering file:      <LibraryID>.best_encodings.orderfile.csv
