@@ -49,7 +49,7 @@ Program options:
                             sample_id1,ashion_vcf1,phoenix_vcf1
                             sample_id2,ashion_vcf2,phoenix_vcf2
         --library_id:     pepSeq library ID, e.g. TM1
-        --caller_count:   minimum caller count for variant consensus calls by Phoenix pipeline
+        --caller_count:   minimum caller count for variant consensus calls by Phoenix pipeline [3]
         --peptide_length: peptide length [15]
         --encode_dir:     directory that contains executable and accessory files for oligo encoding
 ```
