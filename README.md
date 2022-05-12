@@ -8,7 +8,7 @@ The PepSeq pipeline is a python package that uses python 3.7 and other packages.
 
 The package provides a yaml file to create the conda/python3.7 environment for the pipeline.
 
-### Step 1: install Miniconda3 from [Miniconda3-py38_4.11.0-Linux-x86_64.sh] (https://repo.anaconda.com/miniconda/Miniconda3-py38_4.11.0-Linux-x86_64.sh)
+#### Step 1: install Miniconda3 from [Miniconda3-py38_4.11.0-Linux-x86_64.sh] (https://repo.anaconda.com/miniconda/Miniconda3-py38_4.11.0-Linux-x86_64.sh)
  
 ```
 wget https://repo.anaconda.com/miniconda/Miniconda3-py38_4.11.0-Linux-x86_64.sh
@@ -20,13 +20,13 @@ The installer prompts “Do you wish the installer to initialize Anaconda3 by ru
 ```
 
 
->Step 2: create a conda environment
+#### Step 2: create a conda environment
 
 ```
 conda env create -f conda_pepseq_design.yml
 ```
 
-### Activate the python environment before start running the PepSeq pipeline
+## Activate the python environment before start running the PepSeq pipeline
 
 ```
 conda activate pepseq_design
@@ -38,7 +38,7 @@ make sure you have software tool 'bcftools' install in your shell environment, o
 module load bcftools
 ```
 
-### Run pepseq_pipeline.py
+## Run pepseq_pipeline.py
 
 Program options:
 
@@ -54,7 +54,7 @@ Program options:
         --encode_dir:     directory that contains executable and accessory files for oligo encoding
 ```
 
-### input file format
+## input file format
 
 ```
 sampleID_1,Ashion_vcf_1,Phoenix_vcf_1
@@ -63,7 +63,7 @@ sampleID_2,Ashion_vcf_2,Phoenix_vcf_2
 sampleID_n,Ashion_vcf_n,Phoenix_vcf_n
 ```
 
-### output results
+## output results
 
 ```
 Lirary ordering file:      <LibraryID>.best_encodings.orderfile.csv
