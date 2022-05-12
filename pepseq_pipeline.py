@@ -51,6 +51,10 @@ if __name__ == "__main__":
 
     args, remaining_argv = parser.parse_known_args()
 
+    # get abspath for 'pepseq_pipeline.py, and update abspath for args.encode_dir
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    args.encode_dir = os.path.join(script_dir, args.encode_dir)
+
     # create scratch dir and "scratch/varcode" dir
     args.varcode_dir = os.path.join(args.working_dir, 'varcode')
     os.makedirs(args.varcode_dir, exist_ok=True)
