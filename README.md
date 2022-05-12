@@ -66,9 +66,9 @@ sampleID_n,Ashion_vcf_n,Phoenix_vcf_n
 ## output results
 
 ```
-Lirary ordering file:      <LibraryID>.best_encodings.orderfile.csv
+Library ordering file:      <LibraryID>.best_encodings.orderfile.csv
 
-Lirary oligo encodng file: <LibraryID>.best_encodings.csv
+Library oligo encodng file: <LibraryID>.best_encodings.csv
 
 intermediate files:        <scratch> directory
 ```
