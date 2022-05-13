@@ -20,7 +20,7 @@ class Neopeptide:
         self.varcode_dir = args.varcode_dir
 
     def oligo_encoding(self):
-        '''This method is adapted from John Altin <jaltin@tgen.org>, Zane Fink <zanef2@illinois.edu>,
+        '''This method is adapted from John Altin <jaltin@tgen.org>, Zane Fink <zanef2@illinois.edu> at Ladner Lab,
            and Erin Kelly <ekelley@tgen.org>
 
         sources:
@@ -44,7 +44,7 @@ class Neopeptide:
             proc.call(cmd_encoding, shell=True)
 
     def oligo_scoring(self):
-        '''This method is adapted from John Altin <jaltin@tgen.org>, Zane Fink <zanef2@illinois.edu>,
+        '''This method is adapted from John Altin <jaltin@tgen.org>, Zane Fink <zanef2@illinois.edu> at Ladner Lab,
            and Erin Kelly <ekelley@tgen.org>
 
         sources:

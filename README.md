@@ -39,7 +39,7 @@ conda deactivate
 conda activate pepseq_design
 ```
 
-make sure you have software tool 'bcftools' install in your shell environment, otherwise load bcftools from TGen HPC node:
+make sure you have the software tool 'bcftools' installed in your shell environment, otherwise load the bcftools from HPC node:
 
 ```
 module load bcftools
