@@ -20,10 +20,12 @@ class Neopeptide:
         self.varcode_dir = args.varcode_dir
 
     def oligo_encoding(self):
-        '''This method is adapted from Erin Kelly <ekelley@tgen.org>
+        '''This method is adapted from John Altin <jaltin@tgen.org>, Zane Fink <zanef2@illinois.edu>,
+           and Erin Kelly <ekelley@tgen.org>
 
-        source:
-        https://github.com/TGenNorth/TM2_PepSeq/blob/master/analysis/bash/library_design/run_pepseq_design_step1.sh
+        sources:
+        1. https://github.com/LadnerLab/Library-Design/
+        2. https://github.com/TGenNorth/TM2_PepSeq/blob/master/analysis/bash/library_design/run_pepseq_design_step1.sh
 
         :return: None
         '''
@@ -42,10 +44,12 @@ class Neopeptide:
             proc.call(cmd_encoding, shell=True)
 
     def oligo_scoring(self):
-        '''This method is adapted from Erin Kelly <ekelley@tgen.org>
+        '''This method is adapted from John Altin <jaltin@tgen.org>, Zane Fink <zanef2@illinois.edu>,
+           and Erin Kelly <ekelley@tgen.org>
 
-        source:
-        https://github.com/TGenNorth/TM2_PepSeq/blob/master/analysis/bash/library_design/run_pepseq_design_step2.sh
+        sources:
+        1. https://github.com/LadnerLab/Library-Design/
+        2. https://github.com/TGenNorth/TM2_PepSeq/blob/master/analysis/bash/library_design/run_pepseq_design_step2.sh
 
         :return: None
         '''
@@ -205,9 +209,11 @@ class Neopeptide:
         return peptide_path_merged
 
     def _make_prot_seq(self, sample_id, vcf, vcf_source, genome=None):
-        '''This method is adapted from Kevin Drenner <kdrenner@tgen.org>
+        '''This method is adapted from Rebecca Halperin <rhalperin@tgen.org> and Kevin Drenner <kdrenner@tgen.org>
 
-        source: ${HOME}/NeoNox2/makeProtSeq.py
+        sources:
+        1. NeoNox2 (rhalperin): https://github.com/tgen/NeoNox2/
+        2. ${HOME}/NeoNox2/makeProtSeq.py
 
         :param sample_id:   sample id
         :param vcf:         snpeff annotated vcf file path
