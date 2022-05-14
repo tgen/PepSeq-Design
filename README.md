@@ -50,15 +50,15 @@ module load bcftools
 Program options:
 
 ```
-    Program arguments:
-    
-        --mutation_files: a csv file contains a list of vcf files in the following format:
-                            sample_id1,ashion_vcf1,phoenix_vcf1
-                            sample_id2,ashion_vcf2,phoenix_vcf2
-        --library_id:     pepSeq library ID, e.g. TM1
-        --caller_count:   minimum caller count for variant consensus calls by Phoenix pipeline [3]
-        --peptide_length: peptide length [15]
-        --encode_dir:     directory that contains executable and accessory files for oligo encoding
+Program arguments:
+
+    --mutation_files: a csv file contains a list of vcf files in the following format:
+                      sample_id1,ashion_vcf1,phoenix_vcf1
+                      sample_id2,ashion_vcf2,phoenix_vcf2
+    --library_id:     pepSeq library ID, e.g. TM1
+    --caller_count:   minimum caller count for variant consensus calls by Phoenix pipeline [3]
+    --peptide_length: peptide length [15]
+    --encode_dir:     directory that contains executable and accessory files for oligo encoding
 ```
 
 Run the pipeline on HPC worker node: an example below
@@ -70,14 +70,16 @@ python  ~/compute/github/PepSeq-Design/pepseq_pipeline.py -i somatic_mutation_fi
 ## Input file format
 
 ```
-Note: 1. vcf_path is the full file path or absolute path.
-      2. if either vcf file from Ashion or Phoenix pipeline is not available, put a dash '-' in the field.
-      3. The vcf file is a snpEff-annotated vcf file:
-         3a. In Ashion VCF files, take the file that likes like '<file_name_prefix>.tnFreebayes.filt.snpEff.vcf'.
-         3b. In Phoenix pipeline result folder, go to directory '<sample_id>/exome/somatic_variant_calls/vcfmerger2/',
-             take the vcf file that looks like '<file_name_prefix>/<file_name_prefix>.bwa.merged.db.snpeff.full.vcf.gz'.
-             If you want to make a copy of the '*.vcf.gz', you need to make a copy of the index file '*.vcf.gz.tbi'
-             as well, ie. the file '<file_name_prefix>/<file_name_prefix>.bwa.merged.db.snpeff.full.vcf.gz.tbi'.
+Notes:
+
+1. vcf_path is the full file path or absolute path.
+2. if either vcf file from Ashion or Phoenix pipeline is not available, put a dash '-' in the field.
+3. The vcf file is a snpEff-annotated vcf file:
+   3a. In Ashion VCF files, take the file that likes like '<file_name_prefix>.tnFreebayes.filt.snpEff.vcf'.
+   3b. In Phoenix pipeline result folder, go to directory '<sample_id>/exome/somatic_variant_calls/vcfmerger2/',
+       take the vcf file that looks like '<file_name_prefix>/<file_name_prefix>.bwa.merged.db.snpeff.full.vcf.gz'.
+       If you want to make a copy of the '*.vcf.gz', you need to make a copy of the index file '*.vcf.gz.tbi'
+       as well, ie. the file '<file_name_prefix>/<file_name_prefix>.bwa.merged.db.snpeff.full.vcf.gz.tbi'.
       
 sampleID_1,Ashion_vcf1_path,Phoenix_vcf1_path
 sampleID_2,Ashion_vcf2_path,-
