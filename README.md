@@ -35,6 +35,14 @@ conda deactivate
 
 ## Activate the python environment before start running the PepSeq pipeline
 
+login to a worker node on TGen HPC
+
+```
+srun -c8 --pty bash
+```
+
+activate the python environment "pepseq_design"
+
 ```
 conda activate pepseq_design
 ```
