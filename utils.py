@@ -127,6 +127,7 @@ class Neopeptide:
 
     def make_prot_seq(self):
         for sample_id, vcf_list in self.samples.items():
+            peptide_path_ashion, peptide_path_research = None, None
             for vcf_path, vcf_source in vcf_list:
                 if vcf_path == '-':
                     continue
@@ -148,13 +149,14 @@ class Neopeptide:
                     peptide_path_research = self._make_prot_seq(sample_id, vcf_filt, vcf_source, 'hg38')
                     print('TGen peptide file: {}'.format(peptide_path_research))
             # merge peptide.csv files for Ashion and Research/TGen
-            if os.path.isfile(peptide_path_ashion) and os.path.isfile(peptide_path_research):
+            if (peptide_path_ashion is not None and os.path.isfile(peptide_path_ashion)
+                    and peptide_path_research is not None and os.path.isfile(peptide_path_research)):
                 peptide_path_merged = self._merge_prot_seq(peptide_path_ashion, peptide_path_research)
                 self.samples[sample_id].append(peptide_path_merged)
                 print('both Ashion and Research mutation files exist, and merged: {}'.format(peptide_path_merged))
-            elif os.path.isfile(peptide_path_ashion):
+            elif peptide_path_ashion is not None and os.path.isfile(peptide_path_ashion):
                 self.samples[sample_id].append(peptide_path_ashion)
-            elif os.path.isfile(peptide_path_research):
+            elif peptide_path_research is not None and os.path.isfile(peptide_path_research):
                 self.samples[sample_id].append(peptide_path_research)
             else:
                 os.exit('{} does not produce mutation peptide file'.format(sample_id))
